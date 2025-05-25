@@ -100,13 +100,16 @@ export default {
 
     methods: {
         async loadDataFromAPI() {
+            const api_Url = import.meta.env.VITE_API_URL;
+            const api_Key = import.meta.env.VITE_API_KEY;
             const cacheKey = "teamsDetails";
             const cachedData = localStorage.getItem(cacheKey);
 
             if (cachedData) {
                 const { data, timestamp } = JSON.parse(cachedData);
 
-                if (Date.now() - timestamp < 40 * 60 * 1000) {
+                // TODO : enlever après le dev (40 au lieu de 1)
+                if (Date.now() - timestamp < 0.1 * 60 * 1000) {
                     this.details = data;
                     return;
                 }
@@ -114,14 +117,14 @@ export default {
 
             const options = {
                 method: "GET",
-                url: "https://api-hockey.p.rapidapi.com/standings",
+                url: "https://api-hockey.p.rapidapi.com/standings/",
                 params: {
                     league: "51",
                     season: "2024"
                 },
                 headers: {
-                    "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
-                    "X-RapidAPI-Host": "api-hockey.p.rapidapi.com"
+                    "X-RapidAPI-Key": api_Key,
+                    "X-RapidAPI-Host": api_Url
                 }
             };
 

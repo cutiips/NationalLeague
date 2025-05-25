@@ -89,6 +89,8 @@ export default {
         async loadDataFromAPI() {
             const cacheKey = "matchDetails";
             const cachedData = localStorage.getItem(cacheKey);
+            const api_Url = import.meta.env.VITE_API_URL;
+            const api_Key = import.meta.env.VITE_API_KEY;
 
             if (cachedData) {
                 const { data, timestamp } = JSON.parse(cachedData);
@@ -108,8 +110,8 @@ export default {
                     season: "2024"
                 },
                 headers: {
-                    "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
-                    "X-RapidAPI-Host": "api-hockey.p.rapidapi.com"
+                    "X-RapidAPI-Key": api_Key,
+                    "X-RapidAPI-Host": api_Url
                 }
             };
 

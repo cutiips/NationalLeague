@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="display-container">
             <h2 class="mb-4">Classement National League</h2>
-            <h3>Saison 2023-2024</h3>
+            <h3>Saison 2024-2025</h3>
             <div v-if="details.length > 0">
                 <table class="table w-100">
                     <thead>
@@ -57,6 +57,8 @@ export default {
     methods: {
         async loadDataFromAPI() {
             const cacheKey = "classementDetails";
+            const api_Url = import.meta.env.VITE_API_URL;
+            const api_Key = import.meta.env.VITE_API_KEY;
             const cachedData = localStorage.getItem(cacheKey);
 
             if (cachedData) {
@@ -66,18 +68,19 @@ export default {
                     this.details = data;
                     return;
                 }
+                
             }
 
             const options = {
                 method: "GET",
-                url: "https://api-hockey.p.rapidapi.com/standings",
+                url: "https://api-hockey.p.rapidapi.com/standings/",
                 params: {
                     league: "51",
                     season: "2024"
                 },
                 headers: {
-                    "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
-                    "X-RapidAPI-Host": "api-hockey.p.rapidapi.com"
+                    "X-RapidAPI-Key": api_Key,
+                    "X-RapidAPI-Host": api_Url
                 }
             };
 
