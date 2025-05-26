@@ -86,6 +86,9 @@ export default {
     },
 
     methods: {
+        cacheData(data) {
+            localStorage.setItem("matchDetails", JSON.stringify({ data, timestamp: Date.now() }));
+        },
         async loadDataFromAPI() {
             const cacheKey = "matchDetails";
             const cachedData = localStorage.getItem(cacheKey);
