@@ -206,7 +206,7 @@ export default {
                 "Ambri-Piotta": "https://media.api-sports.io/hockey/teams/545.png",
                 Biel: "https://media.api-sports.io/hockey/teams/547.png",
                 "Langnau Tigers": "https://media.api-sports.io/hockey/teams/550.png",
-                Rapperswil: "https://media.api-sports.io/hockey/teams/553.png",
+                "Rapperswil-Jona": "https://media.api-sports.io/hockey/teams/553.png",
                 "EHC Kloten": "https://media.api-sports.io/hockey/teams/561.png",
                 Ajoie: "https://media.api-sports.io/hockey/teams/558.png"
             };
@@ -214,8 +214,7 @@ export default {
             if (teamName in teamLogos) {
                 return teamLogos[teamName];
             }
-
-            return "URL_PAR_DEFAUT";
+            return "https://via.placeholder.com/50";
         }
     }
 };

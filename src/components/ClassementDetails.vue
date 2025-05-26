@@ -68,7 +68,6 @@ export default {
                     this.details = data;
                     return;
                 }
-                
             }
 
             const options = {
