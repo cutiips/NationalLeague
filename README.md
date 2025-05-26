@@ -4,8 +4,6 @@
 
 <img src="public/national_league.png" align="right" width="100" height="100" />
 
-<img src="public/national_league.png" align="right" width="100" heigth="100" />
-
 # Description du projet
 
 Notre projet est un site internet regroupant les matchs, le calendrier, le classement et les statistiques d'équipes de la Ligue nationale suisse de hockey sur glace. Notre but était de créer un site ayant une architecture visuelle moderne, un contenu dynamique et à jour, ainsi qu'une prise en main facile.
