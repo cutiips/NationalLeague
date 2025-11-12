@@ -110,7 +110,7 @@ export default {
                 params: {
                     league: "51",
                     date: this.getCurrentDate(),
-                    season: "2024"
+                    season: "2025"
                 },
                 headers: {
                     "X-RapidAPI-Key": api_Key,
@@ -135,7 +135,7 @@ export default {
                 params: {
                     league: "51",
                     date: this.selectedDate || this.getCurrentDate(),
-                    season: "2024"
+                    season: "2025"
                 },
                 headers: {
                     "X-RapidAPI-Key": import.meta.env.VITE_API_KEY,

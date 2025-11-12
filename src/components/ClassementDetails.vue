@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="display-container">
             <h2 class="mb-4">Classement National League</h2>
-            <h3>Saison 2024-2025</h3>
+            <h3>Saison 2025-2026</h3>
             <div v-if="details.length > 0">
                 <table class="table w-100">
                     <thead>
@@ -55,6 +55,24 @@ export default {
     },
 
     methods: {
+        normalizeLogos(data) {
+            const SPECIAL_ID = 558;
+            const FIXED_LOGO = "https://upload.wikimedia.org/wikipedia/fr/3/3a/HC_Ajoie_logo.jpeg?20210813090436";
+            if (!Array.isArray(data)) return data;
+            return data.map(row => {
+                const clonedRow = { ...row, team: { ...(row.team || {}) } };
+                const team = clonedRow.team;
+                if (team) {
+                    const idNum = Number(team.id);
+                    const logoVal = team.logo;
+                    if (idNum === SPECIAL_ID || String(logoVal) === String(SPECIAL_ID)) {
+                        team.logo = FIXED_LOGO;
+                    }
+                }
+                return clonedRow;
+            });
+        },
+
         async loadDataFromAPI() {
             const cacheKey = "classementDetails";
             const api_Url = import.meta.env.VITE_API_URL;
@@ -62,11 +80,14 @@ export default {
             const cachedData = localStorage.getItem(cacheKey);
 
             if (cachedData) {
-                const { data, timestamp } = JSON.parse(cachedData);
-
-                if (Date.now() - timestamp < 40 * 60 * 1000) {
-                    this.details = data;
-                    return;
+                try {
+                    const { data, timestamp } = JSON.parse(cachedData);
+                    if (Date.now() - timestamp < 40 * 60 * 1000 && Array.isArray(data) && data.length > 0) {
+                        this.details = this.normalizeLogos(data);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn("Cache corrompu, on l'ignore.", e);
                 }
             }
 
@@ -75,7 +96,7 @@ export default {
                 url: "https://api-hockey.p.rapidapi.com/standings/",
                 params: {
                     league: "51",
-                    season: "2024"
+                    season: "2025"
                 },
                 headers: {
                     "X-RapidAPI-Key": api_Key,
@@ -85,12 +106,12 @@ export default {
 
             try {
                 const response = await axios.request(options);
-                this.details = response.data.response[0];
-                this.cacheData(response.data.response[0]);
+                const raw = response.data.response[0];
+                this.details = this.normalizeLogos(raw);
+                this.cacheData(this.details);
             } catch (error) {
                 console.error("Erreur lors de la récupération des données depuis l'API", error);
             }
-            localStorage.setItem(cacheKey, JSON.stringify({ data: this.details, timestamp: Date.now() }));
         },
         cacheData(data) {
             localStorage.setItem("classementDetails", JSON.stringify({ data, timestamp: Date.now() }));

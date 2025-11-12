@@ -120,7 +120,7 @@ export default {
                 url: "https://api-hockey.p.rapidapi.com/standings/",
                 params: {
                     league: "51",
-                    season: "2024"
+                    season: "2025"
                 },
                 headers: {
                     "X-RapidAPI-Key": api_Key,
